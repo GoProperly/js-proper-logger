@@ -17,21 +17,27 @@ This project is build using TypeScript. Because of this there is a "build" step
 using rollup to generate a CommonJs and ESmodule bundle.
 
 ```sh
-npm run dev
 npm run build
 ```
 
+If your making many changes you can run the build in "watch" mode:
+
+```sh
+npm run dev
+```
+
 ## Running tests
+
+We use [Jest](https://jestjs.io/docs/en/expect) for testing this library. The
+tests run on every pushed commit using [GitHub
+actions](https://github.com/GoProperly/js-proper-logger/actions?query=workflow%3A%22Test+%26+Release%22).
 
 Tests can be run with:
 
 ```sh
 npm run test
+npm run test -- --watch
 ```
-
-We use [Jest](https://jestjs.io/docs/en/expect) for testing this library. The
-tests run on every pushed commit using [GitHub
-actions](https://github.com/GoProperly/linoleum/actions?query=workflow%3A%22Test+%26+Release%22).
 
 ## Running linting
 
@@ -39,11 +45,16 @@ This code is linted using `eslint` and autoformatted using `prettier`.
 Additionally we make use of a tool called `husky` which will create git hooks
 which will check your formatting before allowing you to commit.
 
+```sh
+npm run lint
+npm run lint:fix
+```
+
 ## Committing changes
 
 This project adheres to [Semantic Versioning](https://semver.org/) and changes
 are documented in the
-[CHANGELOG](https://github.com/GoProperly/linoleum/blob/master/CHANGELOG.md).
+[CHANGELOG](https://github.com/GoProperly/js-proper-logger/blob/main/CHANGELOG.md).
 
 ### Commit messages
 

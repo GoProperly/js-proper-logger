@@ -1,6 +1,6 @@
-export const LEVELS = {
-  INFO: 10,
-  DEBUG: 20,
+export const LogLevels = {
+  DEBUG: 10,
+  INFO: 20,
   WARNING: 30,
   ERROR: 40,
 };
