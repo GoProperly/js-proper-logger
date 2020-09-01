@@ -1,11 +1,11 @@
 {
-  "name": "@goproperly/js-package",
-  "description": "",
+  "name": "@goproperly/js-proper-logger",
+  "description": "Properly's backend logger for JavaScript",
   "license": "UNLICENSED",
-  "author": "",
+  "author": "Properly Inc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoProperly/js-package.git"
+    "url": "https://github.com/GoProperly/js-proper-logger.git"
   },
   "version": "0.0.1",
   "main": "index.js",
