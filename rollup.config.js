@@ -1,22 +1,26 @@
 import typescript from 'rollup-plugin-typescript2';
+import dts from 'rollup-plugin-dts';
+import del from 'rollup-plugin-delete';
 import pkg from './package.json';
 
-export default [
-  // CommonJS (for Node) and ES module (for bundlers) build.
-  // (We could have three entries in the configuration array
-  // instead of two, but it's quicker to generate multiple
-  // builds from a single configuration where possible, using
-  // an array for the `output` option, where we can specify
-  // `file` and `format` for each target)
+const config = [
   {
     input: 'src/main.ts',
-    external: ['ms'],
-    plugins: [
-      typescript(), // so Rollup can convert TypeScript to JavaScript
-    ],
+    external: [],
+    plugins: [typescript()],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
     ],
   },
+  {
+    input: './dist/src/main.d.ts',
+    output: [{ file: pkg.types, format: 'es' }],
+    plugins: [
+      dts(),
+      del({ targets: ['dist/src', 'dist/test/'], hook: 'buildEnd' }),
+    ],
+  },
 ];
+
+export default config;

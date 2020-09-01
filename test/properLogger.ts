@@ -1,7 +1,7 @@
 import { ProperLogger } from '..';
 
-describe("ProperLogger", () => {
-  it("It has logging levels", () => {
+describe("LEVELS", () => {
+  it("logging levels correspond to acending values as severity increases", () => {
     expect(ProperLogger.LEVELS.DEBUG).toEqual(10);
     expect(ProperLogger.LEVELS.INFO).toEqual(20);
     expect(ProperLogger.LEVELS.INFO).toEqual(30);
