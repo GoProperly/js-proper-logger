@@ -9,7 +9,7 @@ export const LogLevels = {
 export class ProperLogger {
   name: string;
 
-  console: { log: (message: string) => void };
+  console: Pick<Console, 'debug' | 'log' | 'warn' | 'error'>;
 
   static getLogger(name: string): ProperLogger {
     return new ProperLogger(name);
@@ -22,7 +22,19 @@ export class ProperLogger {
     this.console = global.console;
   }
 
+  debug(message: string): void {
+    this.console.debug(JSON.stringify({ message }));
+  }
+
   info(message: string): void {
     this.console.log(JSON.stringify({ message }));
+  }
+
+  warning(message: string): void {
+    this.console.warn(JSON.stringify({ message }));
+  }
+
+  error(message: string): void {
+    this.console.error(JSON.stringify({ message }));
   }
 }
