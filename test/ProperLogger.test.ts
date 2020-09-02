@@ -441,4 +441,31 @@ describe('ProperLogger', () => {
       })
     );
   });
+
+  test('has `INFO` log level if enviroment variable not set', () => {
+    delete process.env.PROPERLY_LOG_LEVEL;
+
+    const logger = setupTestLogger();
+
+    expect(logger.logLevel).toEqual(LogLevels.INFO);
+  });
+
+  test('can have log level set by enviroment variable', () => {
+    process.env.PROPERLY_LOG_LEVEL = LogLevels.DEBUG.toString();
+    expect(setupTestLogger().logLevel).toEqual(LogLevels.DEBUG);
+
+    process.env.PROPERLY_LOG_LEVEL = LogLevels.INFO.toString();
+    expect(setupTestLogger().logLevel).toEqual(LogLevels.INFO);
+  });
+
+  test('has `INFO` log level if enviroment variable has invalid values', () => {
+    process.env.PROPERLY_LOG_LEVEL = undefined;
+    expect(setupTestLogger().logLevel).toEqual(LogLevels.INFO);
+
+    process.env.PROPERLY_LOG_LEVEL = '-10';
+    expect(setupTestLogger().logLevel).toEqual(LogLevels.INFO);
+
+    process.env.PROPERLY_LOG_LEVEL = 'Potato';
+    expect(setupTestLogger().logLevel).toEqual(LogLevels.INFO);
+  });
 });

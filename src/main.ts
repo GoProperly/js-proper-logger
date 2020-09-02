@@ -28,6 +28,12 @@ export class ProperLogger {
     this.console = global.console;
     this.commonTags = {};
     this.logLevel = LogLevels.INFO;
+    if (process.env.PROPERLY_LOG_LEVEL) {
+      const envValue = parseInt(process.env.PROPERLY_LOG_LEVEL, 10);
+      if (envValue >= 0 && envValue < Number.MAX_SAFE_INTEGER) {
+        this.logLevel = envValue;
+      }
+    }
   }
 
   addCommonTags(commonTags: Tags): void {
