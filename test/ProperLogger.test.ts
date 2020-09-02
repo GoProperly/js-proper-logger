@@ -27,6 +27,7 @@ describe('ProperLogger', () => {
   describe('debug', () => {
     test('only message', () => {
       const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
 
       expect(logger.console.debug).not.toHaveBeenCalled();
 
@@ -43,6 +44,7 @@ describe('ProperLogger', () => {
 
     test('with `extraTags`', () => {
       const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
 
       expect(logger.console.debug).not.toHaveBeenCalled();
 
@@ -57,6 +59,29 @@ describe('ProperLogger', () => {
             message: 'I think there be six Richmonds in the field;',
             act: 'v',
             scene: 'iv',
+          }),
+        ],
+      ]);
+    });
+
+    test('does not log if `logLevel` is above debug', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.INFO;
+
+      expect(logger.console.debug).not.toHaveBeenCalled();
+
+      logger.debug('Legitimate Edgar, I must have your land.');
+
+      expect(logger.console.debug).not.toHaveBeenCalled();
+
+      // If the log level is then downgraded to `DEBUG` we should then see logs again.
+      logger.logLevel = LogLevels.DEBUG;
+      logger.debug('Shall top the legitimate. I grow; I prosper.');
+
+      expect((logger.console.debug as jest.Mock).mock.calls).toEqual([
+        [
+          JSON.stringify({
+            message: 'Shall top the legitimate. I grow; I prosper.',
           }),
         ],
       ]);
@@ -100,6 +125,29 @@ describe('ProperLogger', () => {
         ],
       ]);
     });
+
+    test('does not log if `logLevel` is above INFO', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.WARNING;
+
+      expect(logger.console.log).not.toHaveBeenCalled();
+
+      logger.info('No, I’ll not weep.');
+
+      expect(logger.console.log).not.toHaveBeenCalled();
+
+      // If the log level is then downgraded to `INFO` we should then see logs again.
+      logger.logLevel = LogLevels.INFO;
+      logger.info('I have full cause of weeping, but this heart ');
+
+      expect((logger.console.log as jest.Mock).mock.calls).toEqual([
+        [
+          JSON.stringify({
+            message: 'I have full cause of weeping, but this heart ',
+          }),
+        ],
+      ]);
+    });
   });
 
   describe('warning', () => {
@@ -139,6 +187,29 @@ describe('ProperLogger', () => {
         ],
       ]);
     });
+
+    test('does not log if `logLevel` is above WARNING', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.ERROR;
+
+      expect(logger.console.warn).not.toHaveBeenCalled();
+
+      logger.warning('Shall break into a hundred thousand flaws, ');
+
+      expect(logger.console.warn).not.toHaveBeenCalled();
+
+      // If the log level is then downgraded to `WARNING` we should then see logs again.
+      logger.logLevel = LogLevels.WARNING;
+      logger.warning('Or ere I’ll weep. O fool, I shall go mad!');
+
+      expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
+        [
+          JSON.stringify({
+            message: 'Or ere I’ll weep. O fool, I shall go mad!',
+          }),
+        ],
+      ]);
+    });
   });
 
   describe('error', () => {
@@ -174,6 +245,31 @@ describe('ProperLogger', () => {
             message: 'Richard loves Richard; that is, I and I.',
             act: 'v',
             scene: 'iii',
+          }),
+        ],
+      ]);
+    });
+
+    test('does not log if `logLevel` is above ERROR', () => {
+      const logger = setupTestLogger();
+      // We don't have a constant for this. The Python logger has one level
+      // above this called `CRITICAL`.
+      logger.logLevel = 50;
+
+      expect(logger.console.error).not.toHaveBeenCalled();
+
+      logger.error('Howl, howl, howl, howl!');
+
+      expect(logger.console.error).not.toHaveBeenCalled();
+
+      // If the log level is then downgraded to `ERROR` we should then see logs again.
+      logger.logLevel = LogLevels.ERROR;
+      logger.error('That heaven’s vault should crack');
+
+      expect((logger.console.error as jest.Mock).mock.calls).toEqual([
+        [
+          JSON.stringify({
+            message: 'That heaven’s vault should crack',
           }),
         ],
       ]);

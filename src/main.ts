@@ -13,6 +13,8 @@ export class ProperLogger {
 
   commonTags: Tags;
 
+  logLevel: number;
+
   console: Pick<Console, 'debug' | 'log' | 'warn' | 'error'>;
 
   static getLogger(name: string): ProperLogger {
@@ -25,6 +27,7 @@ export class ProperLogger {
     // patch this out.
     this.console = global.console;
     this.commonTags = {};
+    this.logLevel = LogLevels.INFO;
   }
 
   addCommonTags(commonTags: Tags): void {
@@ -51,18 +54,30 @@ export class ProperLogger {
   }
 
   debug(message: string, extraTags?: Tags): void {
+    if (this.logLevel > LogLevels.DEBUG) {
+      return;
+    }
     this.console.debug(this.prepareLog(message, { ...extraTags }));
   }
 
   info(message: string, extraTags?: Tags): void {
+    if (this.logLevel > LogLevels.INFO) {
+      return;
+    }
     this.console.log(this.prepareLog(message, { ...extraTags }));
   }
 
   warning(message: string, extraTags?: Tags): void {
+    if (this.logLevel > LogLevels.WARNING) {
+      return;
+    }
     this.console.warn(this.prepareLog(message, { ...extraTags }));
   }
 
   error(message: string, extraTags?: Tags): void {
+    if (this.logLevel > LogLevels.ERROR) {
+      return;
+    }
     this.console.error(this.prepareLog(message, { ...extraTags }));
   }
 
