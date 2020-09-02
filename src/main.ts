@@ -38,27 +38,26 @@ export class ProperLogger {
     this.commonTags = {};
   }
 
+  private prepareLog(
+    message: string,
+    thingsToLog: Record<string, any>
+  ): string {
+    return JSON.stringify({ message, ...this.commonTags, ...thingsToLog });
+  }
+
   debug(message: string, extraTags?: Tags): void {
-    this.console.debug(
-      JSON.stringify({ message, ...this.commonTags, ...extraTags })
-    );
+    this.console.debug(this.prepareLog(message, { ...extraTags }));
   }
 
   info(message: string, extraTags?: Tags): void {
-    this.console.log(
-      JSON.stringify({ message, ...this.commonTags, ...extraTags })
-    );
+    this.console.log(this.prepareLog(message, { ...extraTags }));
   }
 
   warning(message: string, extraTags?: Tags): void {
-    this.console.warn(
-      JSON.stringify({ message, ...this.commonTags, ...extraTags })
-    );
+    this.console.warn(this.prepareLog(message, { ...extraTags }));
   }
 
   error(message: string, extraTags?: Tags): void {
-    this.console.error(
-      JSON.stringify({ message, ...this.commonTags, ...extraTags })
-    );
+    this.console.error(this.prepareLog(message, { ...extraTags }));
   }
 }
