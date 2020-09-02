@@ -156,12 +156,16 @@ describe('ProperLogger', () => {
 
       expect(logger.console.warn).not.toHaveBeenCalled();
 
-      logger.warning('What do I fear? Myself? There’s none else by.');
+      logger.warning(
+        'Ego_Overload',
+        'What do I fear? Myself? There’s none else by.'
+      );
 
       expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'What do I fear? Myself? There’s none else by.',
+            warning_name: 'Ego_Overload',
+            warning_message: 'What do I fear? Myself? There’s none else by.',
           }),
         ],
       ]);
@@ -172,15 +176,20 @@ describe('ProperLogger', () => {
 
       expect(logger.console.warn).not.toHaveBeenCalled();
 
-      logger.warning('What do I fear? Myself? There’s none else by.', {
-        act: 'v',
-        scene: 'iii',
-      });
+      logger.warning(
+        'Ego_Overload',
+        'What do I fear? Myself? There’s none else by.',
+        {
+          act: 'v',
+          scene: 'iii',
+        }
+      );
 
       expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'What do I fear? Myself? There’s none else by.',
+            warning_name: 'Ego_Overload',
+            warning_message: 'What do I fear? Myself? There’s none else by.',
             act: 'v',
             scene: 'iii',
           }),
@@ -194,18 +203,22 @@ describe('ProperLogger', () => {
 
       expect(logger.console.warn).not.toHaveBeenCalled();
 
-      logger.warning('Shall break into a hundred thousand flaws, ');
+      logger.warning(
+        'Melodrama',
+        'Shall break into a hundred thousand flaws, '
+      );
 
       expect(logger.console.warn).not.toHaveBeenCalled();
 
       // If the log level is then downgraded to `WARNING` we should then see logs again.
       logger.logLevel = LogLevels.WARNING;
-      logger.warning('Or ere I’ll weep. O fool, I shall go mad!');
+      logger.warning('Melodrama', 'Or ere I’ll weep. O fool, I shall go mad!');
 
       expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'Or ere I’ll weep. O fool, I shall go mad!',
+            warning_name: 'Melodrama',
+            warning_message: 'Or ere I’ll weep. O fool, I shall go mad!',
           }),
         ],
       ]);
@@ -218,12 +231,16 @@ describe('ProperLogger', () => {
 
       expect(logger.console.error).not.toHaveBeenCalled();
 
-      logger.error('Richard loves Richard; that is, I and I.');
+      logger.error(
+        'Richard_Confusion',
+        'Richard loves Richard; that is, I and I.'
+      );
 
       expect((logger.console.error as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'Richard loves Richard; that is, I and I.',
+            error_name: 'Richard_Confusion',
+            error_message: 'Richard loves Richard; that is, I and I.',
           }),
         ],
       ]);
@@ -234,15 +251,20 @@ describe('ProperLogger', () => {
 
       expect(logger.console.error).not.toHaveBeenCalled();
 
-      logger.error('Richard loves Richard; that is, I and I.', {
-        act: 'v',
-        scene: 'iii',
-      });
+      logger.error(
+        'Richard_Confusion',
+        'Richard loves Richard; that is, I and I.',
+        {
+          act: 'v',
+          scene: 'iii',
+        }
+      );
 
       expect((logger.console.error as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'Richard loves Richard; that is, I and I.',
+            error_name: 'Richard_Confusion',
+            error_message: 'Richard loves Richard; that is, I and I.',
             act: 'v',
             scene: 'iii',
           }),
@@ -258,18 +280,19 @@ describe('ProperLogger', () => {
 
       expect(logger.console.error).not.toHaveBeenCalled();
 
-      logger.error('Howl, howl, howl, howl!');
+      logger.error('Sad_Lear', 'Howl, howl, howl, howl!');
 
       expect(logger.console.error).not.toHaveBeenCalled();
 
       // If the log level is then downgraded to `ERROR` we should then see logs again.
       logger.logLevel = LogLevels.ERROR;
-      logger.error('That heaven’s vault should crack');
+      logger.error('Sad_Lear', 'That heaven’s vault should crack');
 
       expect((logger.console.error as jest.Mock).mock.calls).toEqual([
         [
           JSON.stringify({
-            message: 'That heaven’s vault should crack',
+            error_name: 'Sad_Lear',
+            error_message: 'That heaven’s vault should crack',
           }),
         ],
       ]);

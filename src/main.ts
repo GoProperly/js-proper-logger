@@ -73,18 +73,30 @@ export class ProperLogger {
     this.console.log(this.prepareLog(message, { ...extraTags }));
   }
 
-  warning(message: string, extraTags?: Tags): void {
+  warning(name: string, message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.WARNING) {
       return;
     }
-    this.console.warn(this.prepareLog(message, { ...extraTags }));
+    this.console.warn(
+      this.prepareLog(null, {
+        warning_name: name,
+        warning_message: message,
+        ...extraTags,
+      })
+    );
   }
 
-  error(message: string, extraTags?: Tags): void {
+  error(name: string, message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.ERROR) {
       return;
     }
-    this.console.error(this.prepareLog(message, { ...extraTags }));
+    this.console.error(
+      this.prepareLog(null, {
+        error_name: name,
+        error_message: message,
+        ...extraTags,
+      })
+    );
   }
 
   metric(
