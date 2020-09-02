@@ -41,7 +41,7 @@
     "babel-jest": "^26.3.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.8.0",
+    "eslint": "^7.8.1",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "jest-mock-console": "^1.0.1",
@@ -55,7 +55,7 @@
     "rollup-plugin-typescript2": "^0.27.2",
     "semantic-release": "^17.1.1",
     "ts-node": "^7.0.1",
-    "tslib": "^1.9.3",
+    "tslib": "^1.13.0",
     "typescript": "^4.0.2"
   },
   "publishConfig": {
