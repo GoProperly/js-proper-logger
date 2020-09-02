@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
+/* eslint-disable class-methods-use-this */
 export const LogLevels = {
   DEBUG: 10,
   INFO: 20,
   WARNING: 30,
   ERROR: 40,
 };
+
+type Tags = Record<string, any>;
 
 export class ProperLogger {
   name: string;
@@ -22,19 +25,27 @@ export class ProperLogger {
     this.console = global.console;
   }
 
-  debug(message: string): void {
-    this.console.debug(JSON.stringify({ message }));
+  addCommonTags(commonTags: Tags): void {
+    // TODO implement
   }
 
-  info(message: string): void {
-    this.console.log(JSON.stringify({ message }));
+  clearCommonTags(): void {
+    // TODO implement
   }
 
-  warning(message: string): void {
-    this.console.warn(JSON.stringify({ message }));
+  debug(message: string, extraTags?: Tags): void {
+    this.console.debug(JSON.stringify({ message, ...extraTags }));
   }
 
-  error(message: string): void {
-    this.console.error(JSON.stringify({ message }));
+  info(message: string, extraTags?: Tags): void {
+    this.console.log(JSON.stringify({ message, ...extraTags }));
+  }
+
+  warning(message: string, extraTags?: Tags): void {
+    this.console.warn(JSON.stringify({ message, ...extraTags }));
+  }
+
+  error(message: string, extraTags?: Tags): void {
+    this.console.error(JSON.stringify({ message, ...extraTags }));
   }
 }

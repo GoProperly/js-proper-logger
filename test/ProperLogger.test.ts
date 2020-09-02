@@ -29,10 +29,35 @@ describe('ProperLogger', () => {
 
     expect(logger.console.debug).not.toHaveBeenCalled();
 
-    logger.debug('Now is the winter of our discontent');
+    logger.debug('I think there be six Richmonds in the field;', {
+      act: 'v',
+      scene: 'iv',
+    });
 
     expect((logger.console.debug as jest.Mock).mock.calls).toEqual([
-      ['{"message":"Now is the winter of our discontent"}'],
+      [
+        JSON.stringify({
+          message: 'I think there be six Richmonds in the field;',
+          act: 'v',
+          scene: 'iv',
+        }),
+      ],
+    ]);
+  });
+
+  it('calls `console.log` after `.info` - without extra tags', () => {
+    const logger = setupTestLogger();
+
+    expect(logger.console.log).not.toHaveBeenCalled();
+
+    logger.info('A horse, a horse, my kingdom for a horse!');
+
+    expect((logger.console.log as jest.Mock).mock.calls).toEqual([
+      [
+        JSON.stringify({
+          message: 'A horse, a horse, my kingdom for a horse!',
+        }),
+      ],
     ]);
   });
 
@@ -41,10 +66,19 @@ describe('ProperLogger', () => {
 
     expect(logger.console.log).not.toHaveBeenCalled();
 
-    logger.info('Made glorious summer by this sun of York');
+    logger.info('A horse, a horse, my kingdom for a horse!', {
+      act: 'v',
+      scene: 'iv',
+    });
 
     expect((logger.console.log as jest.Mock).mock.calls).toEqual([
-      ['{"message":"Made glorious summer by this sun of York"}'],
+      [
+        JSON.stringify({
+          message: 'A horse, a horse, my kingdom for a horse!',
+          act: 'v',
+          scene: 'iv',
+        }),
+      ],
     ]);
   });
 
@@ -53,10 +87,19 @@ describe('ProperLogger', () => {
 
     expect(logger.console.warn).not.toHaveBeenCalled();
 
-    logger.warning('What do I fear? Myself? There’s none else by.');
+    logger.warning('What do I fear? Myself? There’s none else by.', {
+      act: 'v',
+      scene: 'iii',
+    });
 
     expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
-      ['{"message":"What do I fear? Myself? There’s none else by."}'],
+      [
+        JSON.stringify({
+          message: 'What do I fear? Myself? There’s none else by.',
+          act: 'v',
+          scene: 'iii',
+        }),
+      ],
     ]);
   });
 
@@ -65,10 +108,19 @@ describe('ProperLogger', () => {
 
     expect(logger.console.error).not.toHaveBeenCalled();
 
-    logger.error('Richard loves Richard; that is, I and I.');
+    logger.error('Richard loves Richard; that is, I and I.', {
+      act: 'v',
+      scene: 'iii',
+    });
 
     expect((logger.console.error as jest.Mock).mock.calls).toEqual([
-      ['{"message":"Richard loves Richard; that is, I and I."}'],
+      [
+        JSON.stringify({
+          message: 'Richard loves Richard; that is, I and I.',
+          act: 'v',
+          scene: 'iii',
+        }),
+      ],
     ]);
   });
 });
