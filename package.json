@@ -47,7 +47,7 @@
     "jest-mock-console": "^1.0.1",
     "lint-staged": "^10.2.13",
     "prettier": "2.1.1",
-    "rollup": "^1.0.0",
+    "rollup": "^2.26.9",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-dts": "^1.4.12",
