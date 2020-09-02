@@ -180,6 +180,77 @@ describe('ProperLogger', () => {
     });
   });
 
+  describe('metric', () => {
+    test('can log different kinds of metrics', () => {
+      const logger = setupTestLogger();
+
+      logger.metric('num_witches', 3);
+
+      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+        JSON.stringify({
+          metric_name: 'num_witches',
+          metric_value: 3,
+        })
+      );
+
+      logger.metric('kings_name', 'Old Norway');
+
+      expect((logger.console.log as jest.Mock).mock.calls[1][0]).toEqual(
+        JSON.stringify({
+          metric_name: 'kings_name',
+          metric_value: 'Old Norway',
+        })
+      );
+
+      logger.metric('overthinks', true);
+
+      expect((logger.console.log as jest.Mock).mock.calls[2][0]).toEqual(
+        JSON.stringify({
+          metric_name: 'overthinks',
+          metric_value: true,
+        })
+      );
+
+      logger.metric('what_yorick_thinks', null);
+
+      expect((logger.console.log as jest.Mock).mock.calls[3][0]).toEqual(
+        JSON.stringify({
+          metric_name: 'what_yorick_thinks',
+          metric_value: null,
+        })
+      );
+    });
+
+    test('allows extra tags', () => {
+      const logger = setupTestLogger();
+
+      logger.metric('Cladius', 'mean', { why: 'not a very supportive uncle' });
+
+      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+        JSON.stringify({
+          metric_name: 'Cladius',
+          metric_value: 'mean',
+          why: 'not a very supportive uncle',
+        })
+      );
+    });
+
+    test('includes common tags', () => {
+      const logger = setupTestLogger();
+
+      logger.addCommonTags({ year: 1601 });
+      logger.metric('ear poison', 'hebenon');
+
+      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+        JSON.stringify({
+          year: 1601,
+          metric_name: 'ear poison',
+          metric_value: 'hebenon',
+        })
+      );
+    });
+  });
+
   test('can add common tags', () => {
     const logger = setupTestLogger();
 

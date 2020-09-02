@@ -39,10 +39,15 @@ export class ProperLogger {
   }
 
   private prepareLog(
-    message: string,
+    message: string | null,
     thingsToLog: Record<string, any>
   ): string {
-    return JSON.stringify({ message, ...this.commonTags, ...thingsToLog });
+    const firstPart: Record<string, string> = {};
+    if (message) {
+      firstPart.message = message;
+    }
+
+    return JSON.stringify({ ...firstPart, ...this.commonTags, ...thingsToLog });
   }
 
   debug(message: string, extraTags?: Tags): void {
@@ -59,5 +64,19 @@ export class ProperLogger {
 
   error(message: string, extraTags?: Tags): void {
     this.console.error(this.prepareLog(message, { ...extraTags }));
+  }
+
+  metric(
+    metricName: string,
+    metricValue: string | number | boolean | null | undefined,
+    extraTags?: Tags
+  ): void {
+    this.console.log(
+      this.prepareLog(null, {
+        metric_name: metricName,
+        metric_value: metricValue,
+        ...extraTags,
+      })
+    );
   }
 }
