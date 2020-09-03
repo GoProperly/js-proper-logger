@@ -31,13 +31,11 @@ describe('ProperLogger', () => {
 
       logger.debug('I think there be six Richmonds in the field;');
 
-      expect((logger.console.debug as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'I think there be six Richmonds in the field;',
-          }),
-        ],
-      ]);
+      expect(logger.console.debug).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'I think there be six Richmonds in the field;',
+        })
+      );
     });
 
     test('with `extraTags`', () => {
@@ -51,15 +49,13 @@ describe('ProperLogger', () => {
         scene: 'iv',
       });
 
-      expect((logger.console.debug as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'I think there be six Richmonds in the field;',
-            act: 'v',
-            scene: 'iv',
-          }),
-        ],
-      ]);
+      expect(logger.console.debug).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'I think there be six Richmonds in the field;',
+          act: 'v',
+          scene: 'iv',
+        })
+      );
     });
 
     test('does not log if `logLevel` is above debug', () => {
@@ -76,13 +72,11 @@ describe('ProperLogger', () => {
       logger.logLevel = LogLevels.DEBUG;
       logger.debug('Shall top the legitimate. I grow; I prosper.');
 
-      expect((logger.console.debug as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'Shall top the legitimate. I grow; I prosper.',
-          }),
-        ],
-      ]);
+      expect(logger.console.debug).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'Shall top the legitimate. I grow; I prosper.',
+        })
+      );
     });
   });
 
@@ -94,13 +88,11 @@ describe('ProperLogger', () => {
 
       logger.info('A horse, a horse, my kingdom for a horse!');
 
-      expect((logger.console.log as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'A horse, a horse, my kingdom for a horse!',
-          }),
-        ],
-      ]);
+      expect(logger.console.log).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'A horse, a horse, my kingdom for a horse!',
+        })
+      );
     });
 
     test('with `extraTags`', () => {
@@ -113,15 +105,13 @@ describe('ProperLogger', () => {
         scene: 'iv',
       });
 
-      expect((logger.console.log as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'A horse, a horse, my kingdom for a horse!',
-            act: 'v',
-            scene: 'iv',
-          }),
-        ],
-      ]);
+      expect(logger.console.log).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'A horse, a horse, my kingdom for a horse!',
+          act: 'v',
+          scene: 'iv',
+        })
+      );
     });
 
     test('does not log if `logLevel` is above INFO', () => {
@@ -138,13 +128,11 @@ describe('ProperLogger', () => {
       logger.logLevel = LogLevels.INFO;
       logger.info('I have full cause of weeping, but this heart ');
 
-      expect((logger.console.log as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            message: 'I have full cause of weeping, but this heart ',
-          }),
-        ],
-      ]);
+      expect(logger.console.log).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'I have full cause of weeping, but this heart ',
+        })
+      );
     });
   });
 
@@ -159,14 +147,13 @@ describe('ProperLogger', () => {
         'What do I fear? Myself? There’s none else by.'
       );
 
-      expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            warning_name: 'Ego_Overload',
-            warning_message: 'What do I fear? Myself? There’s none else by.',
-          }),
-        ],
-      ]);
+      expect(logger.console.warn).toHaveBeenNthCalledWith(
+        1,
+        JSON.stringify({
+          warning_name: 'Ego_Overload',
+          warning_message: 'What do I fear? Myself? There’s none else by.',
+        })
+      );
     });
 
     test('with `extraTags`', () => {
@@ -183,16 +170,14 @@ describe('ProperLogger', () => {
         }
       );
 
-      expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            warning_name: 'Ego_Overload',
-            warning_message: 'What do I fear? Myself? There’s none else by.',
-            act: 'v',
-            scene: 'iii',
-          }),
-        ],
-      ]);
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'Ego_Overload',
+          warning_message: 'What do I fear? Myself? There’s none else by.',
+          act: 'v',
+          scene: 'iii',
+        })
+      );
     });
 
     test('does not log if `logLevel` is above WARNING', () => {
@@ -212,14 +197,12 @@ describe('ProperLogger', () => {
       logger.logLevel = LogLevels.WARNING;
       logger.warning('Melodrama', 'Or ere I’ll weep. O fool, I shall go mad!');
 
-      expect((logger.console.warn as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            warning_name: 'Melodrama',
-            warning_message: 'Or ere I’ll weep. O fool, I shall go mad!',
-          }),
-        ],
-      ]);
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'Melodrama',
+          warning_message: 'Or ere I’ll weep. O fool, I shall go mad!',
+        })
+      );
     });
   });
 
@@ -234,14 +217,12 @@ describe('ProperLogger', () => {
         'Richard loves Richard; that is, I and I.'
       );
 
-      expect((logger.console.error as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            error_name: 'Richard_Confusion',
-            error_message: 'Richard loves Richard; that is, I and I.',
-          }),
-        ],
-      ]);
+      expect(logger.console.error).toHaveBeenCalledWith(
+        JSON.stringify({
+          error_name: 'Richard_Confusion',
+          error_message: 'Richard loves Richard; that is, I and I.',
+        })
+      );
     });
 
     test('with `extraTags`', () => {
@@ -258,16 +239,14 @@ describe('ProperLogger', () => {
         }
       );
 
-      expect((logger.console.error as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            error_name: 'Richard_Confusion',
-            error_message: 'Richard loves Richard; that is, I and I.',
-            act: 'v',
-            scene: 'iii',
-          }),
-        ],
-      ]);
+      expect(logger.console.error).toHaveBeenCalledWith(
+        JSON.stringify({
+          error_name: 'Richard_Confusion',
+          error_message: 'Richard loves Richard; that is, I and I.',
+          act: 'v',
+          scene: 'iii',
+        })
+      );
     });
 
     test('does not log if `logLevel` is above ERROR', () => {
@@ -286,14 +265,12 @@ describe('ProperLogger', () => {
       logger.logLevel = LogLevels.ERROR;
       logger.error('Sad_Lear', 'That heaven’s vault should crack');
 
-      expect((logger.console.error as jest.Mock).mock.calls).toEqual([
-        [
-          JSON.stringify({
-            error_name: 'Sad_Lear',
-            error_message: 'That heaven’s vault should crack',
-          }),
-        ],
-      ]);
+      expect(logger.console.error).toHaveBeenCalledWith(
+        JSON.stringify({
+          error_name: 'Sad_Lear',
+          error_message: 'That heaven’s vault should crack',
+        })
+      );
     });
   });
 
@@ -303,7 +280,8 @@ describe('ProperLogger', () => {
 
       logger.metric('num_witches', 3);
 
-      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+      expect(logger.console.log).toHaveBeenNthCalledWith(
+        1,
         JSON.stringify({
           metric_name: 'num_witches',
           metric_value: 3,
@@ -312,7 +290,8 @@ describe('ProperLogger', () => {
 
       logger.metric('kings_name', 'Old Norway');
 
-      expect((logger.console.log as jest.Mock).mock.calls[1][0]).toEqual(
+      expect(logger.console.log).toHaveBeenNthCalledWith(
+        2,
         JSON.stringify({
           metric_name: 'kings_name',
           metric_value: 'Old Norway',
@@ -321,7 +300,8 @@ describe('ProperLogger', () => {
 
       logger.metric('overthinks', true);
 
-      expect((logger.console.log as jest.Mock).mock.calls[2][0]).toEqual(
+      expect(logger.console.log).toHaveBeenNthCalledWith(
+        3,
         JSON.stringify({
           metric_name: 'overthinks',
           metric_value: true,
@@ -330,7 +310,8 @@ describe('ProperLogger', () => {
 
       logger.metric('what_yorick_thinks', null);
 
-      expect((logger.console.log as jest.Mock).mock.calls[3][0]).toEqual(
+      expect(logger.console.log).toHaveBeenNthCalledWith(
+        4,
         JSON.stringify({
           metric_name: 'what_yorick_thinks',
           metric_value: null,
@@ -343,7 +324,7 @@ describe('ProperLogger', () => {
 
       logger.metric('Cladius', 'mean', { why: 'not a very supportive uncle' });
 
-      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+      expect(logger.console.log).toHaveBeenCalledWith(
         JSON.stringify({
           metric_name: 'Cladius',
           metric_value: 'mean',
@@ -358,7 +339,7 @@ describe('ProperLogger', () => {
       logger.addCommonTags({ year: 1601 });
       logger.metric('ear poison', 'hebenon');
 
-      expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+      expect(logger.console.log).toHaveBeenCalledWith(
         JSON.stringify({
           year: 1601,
           metric_name: 'ear poison',
@@ -382,7 +363,8 @@ describe('ProperLogger', () => {
       }
     );
 
-    expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      1,
       JSON.stringify({
         message:
           'Unless to see my shadow in the sun And descant on mine own deformity',
@@ -395,7 +377,8 @@ describe('ProperLogger', () => {
     logger.addCommonTags({ year: 1633 });
     logger.info('I am determinèd to prove a villain');
 
-    expect((logger.console.log as jest.Mock).mock.calls[1][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      2,
       JSON.stringify({
         message: 'I am determinèd to prove a villain',
         play: 'Richard III',
@@ -412,7 +395,8 @@ describe('ProperLogger', () => {
     logger.addCommonTags({ play: 'Richard III', year: 1633 });
     logger.info('I am determinèd to prove a villain');
 
-    expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      1,
       JSON.stringify({
         message: 'I am determinèd to prove a villain',
         play: 'Richard III',
@@ -424,7 +408,8 @@ describe('ProperLogger', () => {
     logger.addCommonTags({ year: 1995 });
     logger.info('I am determinèd to prove a villain');
 
-    expect((logger.console.log as jest.Mock).mock.calls[1][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      2,
       JSON.stringify({
         message: 'I am determinèd to prove a villain',
         play: 'Richard III',
@@ -441,7 +426,8 @@ describe('ProperLogger', () => {
     logger.addCommonTags({ play: 'Richard III', year: 1633 });
     logger.info('some day or two Your Highness shall repose you at the Tower;');
 
-    expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      1,
       JSON.stringify({
         message: 'some day or two Your Highness shall repose you at the Tower;',
         play: 'Richard III',
@@ -455,7 +441,8 @@ describe('ProperLogger', () => {
       'Then where you please and shall be thought most fit For your best health and recreation.'
     );
 
-    expect((logger.console.log as jest.Mock).mock.calls[1][0]).toEqual(
+    expect(logger.console.log).toHaveBeenNthCalledWith(
+      2,
       JSON.stringify({
         message:
           'Then where you please and shall be thought most fit For your best health and recreation.',
@@ -470,7 +457,7 @@ describe('ProperLogger', () => {
 
     logger.info('pluck off the bull’s horns and set them in my forehead');
 
-    expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+    expect(logger.console.log).toHaveBeenCalledWith(
       JSON.stringify({
         message: 'pluck off the bull’s horns and set them in my forehead',
         play: 'Much Ado About Nothing',
