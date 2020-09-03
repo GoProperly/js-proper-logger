@@ -7,6 +7,7 @@
   "main": "dist/js-proper-logger.cjs.js",
   "module": "dist/js-proper-logger.esm.js",
   "types": "dist/js-proper-logger.d.ts",
+  "files": ["dist/*"],
   "scripts": {
     "build": "rollup -c",
     "commit": "git-cz",
