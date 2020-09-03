@@ -27,10 +27,13 @@ export class ProperLogger {
     // patch this out.
     this.console = global.console;
     this.commonTags = commonTags || {};
+
+    // Setup the logging level to the value of the `PROPERLY_LOG_LEVEL` or, if
+    // the enviroment variable is missing, default to `INFO`.
     this.logLevel = LogLevels.INFO;
     if (process.env.PROPERLY_LOG_LEVEL) {
       const envValue = parseInt(process.env.PROPERLY_LOG_LEVEL, 10);
-      if (envValue >= 0 && envValue < Number.MAX_SAFE_INTEGER) {
+      if (envValue >= 0) {
         this.logLevel = envValue;
       }
     }
