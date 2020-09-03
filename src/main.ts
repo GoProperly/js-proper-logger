@@ -47,30 +47,27 @@ export class ProperLogger {
     this.commonTags = {};
   }
 
-  private prepareLog(
-    message: string | null,
-    thingsToLog: Record<string, any>
-  ): string {
+  private prepareLog(message: string | null, extraTags: Tags): string {
     const firstPart: Record<string, string> = {};
     if (message) {
       firstPart.message = message;
     }
 
-    return JSON.stringify({ ...firstPart, ...this.commonTags, ...thingsToLog });
+    return JSON.stringify({ ...firstPart, ...this.commonTags, ...extraTags });
   }
 
   debug(message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.DEBUG) {
       return;
     }
-    this.console.debug(this.prepareLog(message, { ...extraTags }));
+    this.console.debug(this.prepareLog(message, extraTags || {}));
   }
 
   info(message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.INFO) {
       return;
     }
-    this.console.log(this.prepareLog(message, { ...extraTags }));
+    this.console.log(this.prepareLog(message, extraTags || {}));
   }
 
   warning(name: string, message: string, extraTags?: Tags): void {
