@@ -10,8 +10,8 @@ describe('LogLevels', () => {
 });
 
 describe('ProperLogger', () => {
-  function setupTestLogger(): ProperLogger {
-    const logger = new ProperLogger('test');
+  function setupTestLogger(extraTags?: Record<string, unknown>): ProperLogger {
+    const logger = new ProperLogger('test', extraTags);
     logger.console = {
       debug: jest.fn(),
       log: jest.fn(),
@@ -459,6 +459,21 @@ describe('ProperLogger', () => {
       JSON.stringify({
         message:
           'Then where you please and shall be thought most fit For your best health and recreation.',
+      })
+    );
+  });
+
+  test('can have `commonTags` passed to the constructor', () => {
+    const logger = setupTestLogger({ play: 'Much Ado About Nothing' });
+
+    expect(logger.console.log).not.toHaveBeenCalled();
+
+    logger.info('pluck off the bull’s horns and set them in my forehead');
+
+    expect((logger.console.log as jest.Mock).mock.calls[0][0]).toEqual(
+      JSON.stringify({
+        message: 'pluck off the bull’s horns and set them in my forehead',
+        play: 'Much Ado About Nothing',
       })
     );
   });

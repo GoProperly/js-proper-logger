@@ -21,12 +21,12 @@ export class ProperLogger {
     return new ProperLogger(name);
   }
 
-  constructor(name: string) {
+  constructor(name: string, commonTags?: Tags) {
     this.name = name;
     // Here we grab a reference to the `global.console` so that in tests we can
     // patch this out.
     this.console = global.console;
-    this.commonTags = {};
+    this.commonTags = commonTags || {};
     this.logLevel = LogLevels.INFO;
     if (process.env.PROPERLY_LOG_LEVEL) {
       const envValue = parseInt(process.env.PROPERLY_LOG_LEVEL, 10);
