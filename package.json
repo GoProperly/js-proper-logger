@@ -7,7 +7,9 @@
   "main": "dist/js-proper-logger.cjs.js",
   "module": "dist/js-proper-logger.esm.js",
   "types": "dist/js-proper-logger.d.ts",
-  "files": ["dist/*"],
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "build": "rollup -c",
     "commit": "git-cz",
@@ -45,7 +47,6 @@
     "eslint": "^7.8.1",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
-    "jest-mock-console": "^1.0.1",
     "lint-staged": "^10.2.13",
     "prettier": "2.1.1",
     "rollup": "^1.0.0",

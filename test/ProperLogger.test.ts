@@ -1,5 +1,3 @@
-/* eslint-disable no-console, @typescript-eslint/no-empty-function */
-
 import { ProperLogger, LogLevels } from '..';
 
 describe('LogLevels', () => {
