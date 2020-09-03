@@ -1,3 +1,10 @@
 module.exports = {
-  extends: ['@goproperly/eslint-config-properly-base'],
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  extends: [
+    '@goproperly/eslint-config-properly-base',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  ignorePatterns: ['dist/*'],
 };

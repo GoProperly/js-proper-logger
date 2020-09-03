@@ -3,39 +3,62 @@
   "description": "Properly's backend logger for JavaScript",
   "license": "UNLICENSED",
   "author": "Properly Inc",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/GoProperly/js-proper-logger.git"
-  },
   "version": "0.0.1",
-  "main": "index.js",
-  "files": [],
+  "main": "dist/js-proper-logger.cjs.js",
+  "module": "dist/js-proper-logger.esm.js",
+  "types": "dist/js-proper-logger.d.ts",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
+    "build": "rollup -c",
     "commit": "git-cz",
+    "dev": "rollup -c -w",
     "lint": "eslint .",
     "lint:fix": "eslint --fix . || true",
     "release": "semantic-release",
-    "test": "echo \"No tests yet!\" && exit 0"
+    "test": "jest"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoProperly/js-proper-logger.git"
+  },
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^9.1.2",
     "@goproperly/eslint-config-properly-base": "^1.2.9",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
+    "@types/jest": "^26.0.12",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "babel-jest": "^26.3.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.8.0",
+    "eslint": "^7.8.1",
     "husky": "^4.2.5",
+    "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
     "prettier": "2.1.1",
-    "semantic-release": "^17.1.1"
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^1.4.12",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "semantic-release": "^17.1.1",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.13.0",
+    "typescript": "^4.0.2"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -47,10 +70,10 @@
     }
   },
   "lint-staged": {
-    "*.{css,json,md}": [
+    "*.{css,json,md,yml}": [
       "prettier --write"
     ],
-    "*.js": [
+    "*.ts": [
       "eslint --fix"
     ]
   }
