@@ -6,4 +6,5 @@ module.exports = {
     '@goproperly/eslint-config-properly-base',
     'plugin:@typescript-eslint/recommended',
   ],
+  ignorePatterns: ['dist/*'],
 };
