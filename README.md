@@ -13,14 +13,14 @@ npm install
 
 ## Building
 
-This project is build using TypeScript. Because of this there is a "build" step
-using rollup to generate a CommonJs and ESmodule bundle.
+This project is built using TypeScript. Because of this there is a "build" step
+using Rollup to generate a CommonJS and ESmodule bundles.
 
 ```sh
 npm run build
 ```
 
-If your making many changes you can run the build in "watch" mode:
+If you're making many changes you can run the build in "watch" mode:
 
 ```sh
 npm run dev
