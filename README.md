@@ -2,6 +2,84 @@
 
 This repository contains the code for our backend JavaScript logger.
 
+## Using this package
+
+To use this package in a backend JavaScript project:
+
+```
+npm install --save @goproperly/js-proper-logger
+```
+
+Set and environment variable to set the level that should be logged at
+(assuming this is a lambda this can be done via the AWS console):
+
+```sh
+PROPERLY_LOG_LEVEL = 20  # Possible values can be found in the `LogLevels` constant
+```
+
+And then start logging things:
+
+```javascript
+import { ProperLogger } from '@goproperly/js-proper-logger';
+
+// Instances of the logger can be created
+const logger = new ProperLogger('get_offer_details');
+
+// Those instance have methods that allow you to log at different levels of
+// severity. Depending on what the `logger.logLevel` is set at (controlled by
+// the `PROPERLY_LOG_LEVEL` environment variable) the log may or may not be
+// emitted for collection by CloudWatch.
+logger.info('Test logging', { exampleTag: 'additional details' });
+// This will call `console.log` with `{'message': 'Test logging', 'exampleTag': 'additional details'}`
+```
+
+
+### How does it work
+
+The `ProperLogger` provides us with 3 things:
+
+- An interface for writing structured logs.
+- A way to make our structured logs isometric with the logs created by our
+  Python backend services.
+- A way to change the amount of detail about what is recorded without a new deploy.
+
+The way the `ProperLogger` works is that when a method is called it writes a
+message in a JSON format to the `Console`. These messages written to the
+console are then collected by `CloudWatch` which we then to create dashboard
+and/or understand what happened when something goes wrong.
+
+The 4 levels of logging loosely correspond to Python's levels of logging:
+`logger.debug`, `logger.info`, `logger.warning` and `logger.error`.
+
+The logger instances can also be used to record metrics:
+
+```javascript
+logger.metric('external_call_count', 3);
+// This will log to `console.log` and can be used by CloudWatch insights.
+```
+
+This is also a concept of "common tags". These tags are recorded in every log message:
+
+```javascript
+logger.addCommonTags({ requestId: 'x-123-fake-request-id' });
+logger.info('Enqueued message on event bus');
+logger.error('MISSING_VALUE_ERROR', "Expected 'x' to be present on 'Vector'");
+// Both of these calls will include the `requestId` in what they write to the Console.
+
+// Common tags can also be cleared
+logger.clearCommonTags();
+```
+
+If you want to decrease the number of logs that the service is creating (for
+example if the service was deployed and has been well behaved for a little
+while) you can change the `PROPERLY_LOG_LEVEL` environment variable. If the
+`loggler.logLevel` is less then the method's level nothing will be written to
+the console (e.g. if `logger.debug` is called and the `PROPERLY_LOG_LEVEL` is
+set to `LogLevels.DEBUG` a message will be written to `console.debug` when
+`logger.debug` is called. If the `PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` a
+message will not be written to `console.debug`).
+
+
 ## Setup
 
 You can install the package by:
