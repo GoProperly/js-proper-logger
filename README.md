@@ -10,7 +10,7 @@ To use this package in a backend JavaScript project:
 npm install --save @goproperly/js-proper-logger
 ```
 
-Set and environment variable to set the level that should be logged at
+Set an environment variable to set the level that should be logged at
 (assuming this is a lambda this can be done via the AWS console):
 
 ```sh
@@ -45,7 +45,7 @@ The `ProperLogger` provides us with 3 things:
 
 The way the `ProperLogger` works is that when a method is called it writes a
 message in a JSON format to the `Console`. These messages written to the
-console are then collected by `CloudWatch` which we then to create dashboard
+console are then collected by `CloudWatch` which we then use to create dashboards
 and/or understand what happened when something goes wrong.
 
 The 4 levels of logging loosely correspond to Python's levels of logging:
@@ -75,9 +75,9 @@ example if the service was deployed and has been well behaved for a little
 while) you can change the `PROPERLY_LOG_LEVEL` environment variable. If the
 `loggler.logLevel` is less then the method's level nothing will be written to
 the console (e.g. if `logger.debug` is called and the `PROPERLY_LOG_LEVEL` is
-set to `LogLevels.DEBUG` a message will be written to `console.debug` when
-`logger.debug` is called. If the `PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` a
-message will not be written to `console.debug`).
+set to `LogLevels.DEBUG`, a message will be written to `console.debug`. If the
+`PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` a message will not be written
+to `console.debug`).
 
 
 ## Setup
