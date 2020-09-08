@@ -23,7 +23,7 @@ And then start logging things:
 import { ProperLogger } from '@goproperly/js-proper-logger';
 
 // Instances of the logger can be created
-const logger = new ProperLogger('get_offer_details');
+const logger = ProperLogger.getLogger('get_offer_details');
 
 // Those instance have methods that allow you to log at different levels of
 // severity. Depending on what the `logger.logLevel` is set at (controlled by
@@ -57,6 +57,11 @@ The logger instances can also be used to record metrics:
 logger.metric('external_call_count', 3);
 // This will log to `console.log` and can be used by CloudWatch insights.
 ```
+
+Instances of the `ProperLogger` should be created using the
+`ProperLogger.getLogger` method. This method will return the same instance of
+the logger depending on the name provided which allows for reusing the same
+logger at different files without passing logger instances between functions.
 
 This is also a concept of "common tags". These tags are recorded in every log message:
 

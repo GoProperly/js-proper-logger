@@ -17,8 +17,17 @@ export class ProperLogger {
 
   console: Pick<Console, 'debug' | 'log' | 'warn' | 'error'>;
 
+  static loggerInstances: Record<string, ProperLogger> = {};
+
   static getLogger(name: string): ProperLogger {
-    return new ProperLogger(name);
+    const memoizedInstance = ProperLogger.loggerInstances[name];
+    if (memoizedInstance !== undefined) {
+      return memoizedInstance;
+    }
+    const newInstance = new ProperLogger(name);
+    ProperLogger.loggerInstances[name] = newInstance;
+
+    return newInstance;
   }
 
   constructor(name: string, commonTags?: Tags) {

@@ -22,6 +22,28 @@ describe('ProperLogger', () => {
     return logger;
   }
 
+  describe('getLogger', () => {
+    test('returns different instances when given different names', () => {
+      const logger1 = ProperLogger.getLogger('outrageous fortune');
+      const logger2 = ProperLogger.getLogger('sea of troubles');
+
+      // Note we're using `toBe` rather than `toEqual` not just for the Hamlet
+      // pun, but also because we want to check that these are not the same
+      // instance, and not just equal to one another.
+      expect(logger1).not.toBe(logger2);
+    });
+
+    test('returns the same instance when given the same name', () => {
+      const logger1 = ProperLogger.getLogger('mortal coil');
+      const logger2 = ProperLogger.getLogger('mortal coil');
+
+      // Note we're using `toBe` rather than `toEqual` not just for the Hamlet
+      // pun, but also because we want to check that these are the same
+      // instance, and not just equal to one another.
+      expect(logger1).toBe(logger2);
+    });
+  });
+
   describe('debug', () => {
     test('only message', () => {
       const logger = setupTestLogger();
