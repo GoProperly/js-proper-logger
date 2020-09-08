@@ -1,3 +1,10 @@
+### [1.0.1](https://github.com/GoProperly/js-proper-logger/compare/v1.0.0...v1.0.1) (2020-09-08)
+
+
+### Bug Fixes
+
+* update the `ProperLogger.getlogger` to be a singleton factory ([ac23610](https://github.com/GoProperly/js-proper-logger/commit/ac236101b316010d5ca94b5863529057cc22718a))
+
 ## 1.0.0 (2020-09-04)
 
 
