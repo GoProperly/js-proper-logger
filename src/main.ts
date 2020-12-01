@@ -68,29 +68,51 @@ export class ProperLogger {
     return JSON.stringify({ ...firstPart, ...this.commonTags, ...extraTags });
   }
 
+  // We have seen an issue before where a primative value was passed in as an
+  // `extraTags` field. This caused logging to fail which was an undesirable
+  // failure mode.
+  private checkTags(tags: Tags): Tags {
+    if (!(tags && typeof tags === 'object' && !Array.isArray(tags))) {
+      this.warning(
+        'RECEIVED_INVALID_TAGS',
+        'Received invalid value for tags.',
+        {
+          tags,
+        }
+      );
+
+      return {};
+    }
+
+    return tags;
+  }
+
   debug(message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.DEBUG) {
       return;
     }
-    this.console.debug(this.prepareLog(message, extraTags || {}));
+    const safeExtraTags = this.checkTags(extraTags || {});
+    this.console.debug(this.prepareLog(message, safeExtraTags));
   }
 
   info(message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.INFO) {
       return;
     }
-    this.console.log(this.prepareLog(message, extraTags || {}));
+    const safeExtraTags = this.checkTags(extraTags || {});
+    this.console.log(this.prepareLog(message, safeExtraTags));
   }
 
   warning(name: string, message: string, extraTags?: Tags): void {
     if (this.logLevel > LogLevels.WARNING) {
       return;
     }
+    const safeExtraTags = this.checkTags(extraTags || {});
     this.console.warn(
       this.prepareLog(null, {
         warning_name: name,
         warning_message: message,
-        ...extraTags,
+        ...safeExtraTags,
       })
     );
   }
@@ -99,11 +121,12 @@ export class ProperLogger {
     if (this.logLevel > LogLevels.ERROR) {
       return;
     }
+    const safeExtraTags = this.checkTags(extraTags || {});
     this.console.error(
       this.prepareLog(null, {
         error_name: name,
         error_message: message,
-        ...extraTags,
+        ...safeExtraTags,
       })
     );
   }
@@ -113,11 +136,12 @@ export class ProperLogger {
     metricValue: string | number | boolean | null | undefined,
     extraTags?: Tags
   ): void {
+    const safeExtraTags = this.checkTags(extraTags || {});
     this.console.log(
       this.prepareLog(null, {
         metric_name: metricName,
         metric_value: metricValue,
-        ...extraTags,
+        ...safeExtraTags,
       })
     );
   }

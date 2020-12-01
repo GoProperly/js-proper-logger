@@ -80,6 +80,34 @@ describe('ProperLogger', () => {
       );
     });
 
+    test('with invalid `extraTags`', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
+
+      expect(logger.console.debug).not.toHaveBeenCalled();
+
+      logger.debug(
+        'Rescue, my lord of Norfolk, rescue, rescue!',
+        // @ts-expect-error: We're purposefully passing a bad value here
+        'this should be an object'
+      );
+
+      // We still want to log the message, but we'll drop the tags
+      expect(logger.console.debug).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'Rescue, my lord of Norfolk, rescue, rescue!',
+        })
+      );
+      // We log what the tags would have been in a warning.
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'RECEIVED_INVALID_TAGS',
+          warning_message: 'Received invalid value for tags.',
+          tags: 'this should be an object',
+        })
+      );
+    });
+
     test('does not log if `logLevel` is above debug', () => {
       const logger = setupTestLogger();
       logger.logLevel = LogLevels.INFO;
@@ -132,6 +160,34 @@ describe('ProperLogger', () => {
           message: 'A horse, a horse, my kingdom for a horse!',
           act: 'v',
           scene: 'iv',
+        })
+      );
+    });
+
+    test('with invalid `extraTags`', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
+
+      expect(logger.console.log).not.toHaveBeenCalled();
+
+      logger.info(
+        'His horse is slain, and all on foot he fights,',
+        // @ts-expect-error: We're purposefully passing a bad value here
+        'this should be an object'
+      );
+
+      // We still want to log the message, but we'll drop the tags
+      expect(logger.console.log).toHaveBeenCalledWith(
+        JSON.stringify({
+          message: 'His horse is slain, and all on foot he fights,',
+        })
+      );
+      // We log what the tags would have been in a warning.
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'RECEIVED_INVALID_TAGS',
+          warning_message: 'Received invalid value for tags.',
+          tags: 'this should be an object',
         })
       );
     });
@@ -202,6 +258,36 @@ describe('ProperLogger', () => {
       );
     });
 
+    test('with invalid `extraTags`', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
+
+      expect(logger.console.warn).not.toHaveBeenCalled();
+
+      logger.warning(
+        'KINGDOM_FOR_DISCOUNTED_RATE',
+        'A horse, a horse, my kingdom for a horse!',
+        // @ts-expect-error: We're purposefully passing a bad value here
+        'this should be an object'
+      );
+
+      // We still want to log the message, but we'll drop the tags
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'KINGDOM_FOR_DISCOUNTED_RATE',
+          warning_message: 'A horse, a horse, my kingdom for a horse!',
+        })
+      );
+      // We log what the tags would have been in a warning.
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'RECEIVED_INVALID_TAGS',
+          warning_message: 'Received invalid value for tags.',
+          tags: 'this should be an object',
+        })
+      );
+    });
+
     test('does not log if `logLevel` is above WARNING', () => {
       const logger = setupTestLogger();
       logger.logLevel = LogLevels.ERROR;
@@ -267,6 +353,36 @@ describe('ProperLogger', () => {
           error_message: 'Richard loves Richard; that is, I and I.',
           act: 'v',
           scene: 'iii',
+        })
+      );
+    });
+
+    test('with invalid `extraTags`', () => {
+      const logger = setupTestLogger();
+      logger.logLevel = LogLevels.DEBUG;
+
+      expect(logger.console.warn).not.toHaveBeenCalled();
+
+      logger.error(
+        'TERRIBLE_PUN',
+        'And I will stand the hazard of the die.',
+        // @ts-expect-error: We're purposefully passing a bad value here
+        'this should be an object'
+      );
+
+      // We still want to log the message, but we'll drop the tags
+      expect(logger.console.error).toHaveBeenCalledWith(
+        JSON.stringify({
+          error_name: 'TERRIBLE_PUN',
+          error_message: 'And I will stand the hazard of the die.',
+        })
+      );
+      // We log what the tags would have been in a warning.
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'RECEIVED_INVALID_TAGS',
+          warning_message: 'Received invalid value for tags.',
+          tags: 'this should be an object',
         })
       );
     });
@@ -341,7 +457,7 @@ describe('ProperLogger', () => {
       );
     });
 
-    test('allows extra tags', () => {
+    test('allows extraTags', () => {
       const logger = setupTestLogger();
 
       logger.metric('Cladius', 'mean', { why: 'not a very supportive uncle' });
@@ -351,6 +467,32 @@ describe('ProperLogger', () => {
           metric_name: 'Cladius',
           metric_value: 'mean',
           why: 'not a very supportive uncle',
+        })
+      );
+    });
+
+    test('with invalid extraTags', () => {
+      const logger = setupTestLogger();
+
+      logger.metric(
+        'Polonius',
+        'not_good_at_hiding',
+        // @ts-expect-error: We're purposefully passing a bad value here
+        'this should be an object'
+      );
+
+      expect(logger.console.log).toHaveBeenCalledWith(
+        JSON.stringify({
+          metric_name: 'Polonius',
+          metric_value: 'not_good_at_hiding',
+        })
+      );
+      // We log what the tags would have been in a warning.
+      expect(logger.console.warn).toHaveBeenCalledWith(
+        JSON.stringify({
+          warning_name: 'RECEIVED_INVALID_TAGS',
+          warning_message: 'Received invalid value for tags.',
+          tags: 'this should be an object',
         })
       );
     });
