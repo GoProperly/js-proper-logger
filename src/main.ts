@@ -35,7 +35,7 @@ export class ProperLogger {
     // Here we grab a reference to the `global.console` so that in tests we can
     // patch this out.
     this.console = global.console;
-    this.commonTags = commonTags || {};
+    this.commonTags = this.checkTags(commonTags || {});
 
     // Setup the logging level to the value of the `PROPERLY_LOG_LEVEL` or, if
     // the enviroment variable is missing, default to `INFO`.
@@ -49,10 +49,8 @@ export class ProperLogger {
   }
 
   addCommonTags(commonTags: Tags): void {
-    this.commonTags = {
-      ...this.commonTags,
-      ...commonTags,
-    };
+    const safeCommonTags = this.checkTags(commonTags);
+    this.commonTags = { ...this.commonTags, ...safeCommonTags };
   }
 
   clearCommonTags(): void {

@@ -582,6 +582,35 @@ describe('ProperLogger', () => {
     );
   });
 
+  test('will not allow adding invalid common tags', () => {
+    const logger = setupTestLogger();
+
+    expect(logger.console.log).not.toHaveBeenCalled();
+
+    // @ts-expect-error: We're purposefully passing a bad value here
+    logger.addCommonTags('this should be an object');
+    logger.info('I, that am curtailed of this fair proportion', {
+      act: 'i',
+      scene: 'i',
+    });
+
+    expect(logger.console.log).toHaveBeenCalledWith(
+      JSON.stringify({
+        message: 'I, that am curtailed of this fair proportion',
+        act: 'i',
+        scene: 'i',
+      })
+    );
+    // We log what the tags would have been in a warning.
+    expect(logger.console.warn).toHaveBeenCalledWith(
+      JSON.stringify({
+        warning_name: 'RECEIVED_INVALID_TAGS',
+        warning_message: 'Received invalid value for tags.',
+        tags: 'this should be an object',
+      })
+    );
+  });
+
   test('can clear common tags', () => {
     const logger = setupTestLogger();
 
@@ -625,6 +654,21 @@ describe('ProperLogger', () => {
       JSON.stringify({
         message: 'pluck off the bull’s horns and set them in my forehead',
         play: 'Much Ado About Nothing',
+      })
+    );
+  });
+
+  test('invalid `commonTags` passed to the constructor will be dropped', () => {
+    // @ts-expect-error: We're purposefully passing a bad value here
+    const logger = setupTestLogger('this should be an object');
+
+    expect(logger.console.log).not.toHaveBeenCalled();
+
+    logger.info('pluck off the bull’s horns and set them in my forehead');
+
+    expect(logger.console.log).toHaveBeenCalledWith(
+      JSON.stringify({
+        message: 'pluck off the bull’s horns and set them in my forehead',
       })
     );
   });
