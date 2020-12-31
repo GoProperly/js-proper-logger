@@ -3,7 +3,7 @@
   "description": "Properly's backend logger for JavaScript",
   "license": "UNLICENSED",
   "author": "Properly Inc",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/js-proper-logger.cjs.js",
   "module": "dist/js-proper-logger.esm.js",
   "types": "dist/js-proper-logger.d.ts",

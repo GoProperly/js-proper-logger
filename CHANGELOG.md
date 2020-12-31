@@ -1,3 +1,10 @@
+### [1.1.1](https://github.com/GoProperly/js-proper-logger/compare/v1.1.0...v1.1.1) (2020-12-31)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump ini from 1.3.5 to 1.3.8 ([9ee28ab](https://github.com/GoProperly/js-proper-logger/commit/9ee28ab8aebfc5256971abd010f3c727a1e54cf0))
+
 ## [1.1.0](https://github.com/GoProperly/js-proper-logger/compare/v1.0.1...v1.1.0) (2020-12-02)
 
 
