@@ -85,7 +85,7 @@ of logging:
 - `logger.debug` (10)
 - `logger.info` (20)
 - `logger.warning` (30)
-- `logger.error` (40).
+- `logger.error` (40)
 
 If you want to decrease the number of logs that the service is creating (for
 example if the service was deployed and has been well-behaved for a little
