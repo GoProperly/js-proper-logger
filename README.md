@@ -33,7 +33,6 @@ logger.info('Test logging', { exampleTag: 'additional details' });
 // This will call `console.log` with `{'message': 'Test logging', 'exampleTag': 'additional details'}`
 ```
 
-
 ### How does it work
 
 The `ProperLogger` provides us with 3 things:
@@ -51,6 +50,8 @@ and/or understand what happened when something goes wrong.
 The 4 levels of logging loosely correspond to Python's levels of logging:
 `logger.debug`, `logger.info`, `logger.warning` and `logger.error`.
 
+#### Metrics
+
 The logger instances can also be used to record metrics:
 
 ```javascript
@@ -58,10 +59,14 @@ logger.metric('external_call_count', 3);
 // This will log to `console.log` and can be used by CloudWatch insights.
 ```
 
+#### Creating a logger
+
 Instances of the `ProperLogger` should be created using the
 `ProperLogger.getLogger` method. This method will return the same instance of
 the logger depending on the name provided which allows for reusing the same
 logger at different files without passing logger instances between functions.
+
+#### Common tags
 
 This is also a concept of "common tags". These tags are recorded in every log message:
 
@@ -75,6 +80,8 @@ logger.error('MISSING_VALUE_ERROR', "Expected 'x' to be present on 'Vector'");
 logger.clearCommonTags();
 ```
 
+#### Log levels
+
 If you want to decrease the number of logs that the service is creating (for
 example if the service was deployed and has been well behaved for a little
 while) you can change the `PROPERLY_LOG_LEVEL` environment variable. If the
@@ -83,7 +90,6 @@ the console (e.g. if `logger.debug` is called and the `PROPERLY_LOG_LEVEL` is
 set to `LogLevels.DEBUG`, a message will be written to `console.debug`. If the
 `PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` a message will not be written
 to `console.debug`).
-
 
 ## Setup
 
