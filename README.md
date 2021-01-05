@@ -47,9 +47,6 @@ message in a JSON format to the `Console`. These messages written to the
 console are then collected by `CloudWatch` which we then use to create dashboards
 and/or understand what happened when something goes wrong.
 
-The 4 levels of logging loosely correspond to Python's levels of logging:
-`logger.debug`, `logger.info`, `logger.warning` and `logger.error`.
-
 #### Metrics
 
 The logger instances can also be used to record metrics:
@@ -82,13 +79,22 @@ logger.clearCommonTags();
 
 #### Log levels
 
+There are four supported levels of logging, which correspond to Python's levels
+of logging:
+
+- `logger.debug` (10)
+- `logger.info` (20)
+- `logger.warning` (30)
+- `logger.error` (40).
+
 If you want to decrease the number of logs that the service is creating (for
-example if the service was deployed and has been well behaved for a little
-while) you can change the `PROPERLY_LOG_LEVEL` environment variable. If the
-`loggler.logLevel` is less then the method's level nothing will be written to
-the console (e.g. if `logger.debug` is called and the `PROPERLY_LOG_LEVEL` is
-set to `LogLevels.DEBUG`, a message will be written to `console.debug`. If the
-`PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` a message will not be written
+example if the service was deployed and has been well-behaved for a little
+while) you can increase the value of the `PROPERLY_LOG_LEVEL` environment
+variable. If the `loggler.logLevel` is greater than the called logging
+method's level, nothing will be written to the console (e.g. if
+`logger.debug` is called and the `PROPERLY_LOG_LEVEL` is set to
+`LogLevels.DEBUG` (10), a message will be written to `console.debug`. If the
+`PROPERLY_LOG_LEVEL` log is `LogLevels.INFO` (20) a message will not be written
 to `console.debug`).
 
 ## Setup
