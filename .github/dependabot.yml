@@ -3,11 +3,11 @@ registries:
   npm-registry-npm-pkg-github-com-goproperly:
     type: npm-registry
     url: https://npm.pkg.github.com/goproperly
-    token: "${{secrets.NPM_REGISTRY_NPM_PKG_GITHUB_COM_GOPROPERLY_TOKEN}}"
+    token: "${{secrets.PROPERLY_GITHUB_REPO_ACCESS}}"
   npm-registry-npm-pkg-github-com:
     type: npm-registry
     url: https://npm.pkg.github.com
-    token: "${{secrets.NPM_REGISTRY_NPM_PKG_GITHUB_COM_TOKEN}}"
+    token: "${{secrets.PROPERLY_GITHUB_REPO_ACCESS}}"
 
 updates:
 - package-ecosystem: npm
